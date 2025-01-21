@@ -90,7 +90,7 @@ class ContaBancariaScanner(nome: String, cpf: String, saldo: Double) {
     fun depositar(valor: Double) {
         if (valor > 0) {
             saldo += valor
-            println("Depósito concluído com sucesso, seu saldo atual é: $saldo")
+            println("Depósito concluído com sucesso, seu saldo atual é R$: $saldo")
         } else {
             println("Você inseriu um valor inválido. Por favor insira valores maiores que zero")
         }
@@ -98,9 +98,9 @@ class ContaBancariaScanner(nome: String, cpf: String, saldo: Double) {
 
     fun sacar(valor: Double) {
         if (valor <= saldo) {
-            println("Seu saque no valor de: $valor, foi concluído com sucesso")
+            println("Seu saque no valor de R$: $valor, foi concluído com sucesso")
             saldo -= valor
-            println("Seu saldo atual é de: $saldo")
+            println("Seu saldo atual é de: R$: $saldo")
         } else {
             println("Falha ao realizar o seu saque. O valor do saque excede o valor presente em sua conta")
         }
@@ -108,12 +108,14 @@ class ContaBancariaScanner(nome: String, cpf: String, saldo: Double) {
 
     fun transferir(valor: Double, contaDestino: ContaBancariaScanner) {
         if (cpf == contaDestino.cpf) {
-            println("Falha! Você não pode fazer uma transferência para sí mesmo")
+            println("Falha! Você não pode fazer uma transferência para si mesmo.")
+
         } else {
             if (valor <= saldo) {
                 saldo -= valor
-                println("Transferência concluída com sucesso, para: ${contaDestino.nome}\n no valor de: $saldo")
-                println("Seu saldo atual é de: $saldo")
+                contaDestino.saldo += valor
+                println("Transferência de R$$valor concluída com sucesso para ${contaDestino.nome}.")
+                println("Seu saldo atual é de: R$$saldo")
             }
         }
     }
