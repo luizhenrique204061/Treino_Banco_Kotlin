@@ -72,13 +72,23 @@ private fun exibirMenu() {
 
 private fun lerValorEntrada(scanner: Scanner): Double {
     while (true) {
-        var valorRecebido = scanner.nextLine()
+        val valorRecebido = scanner.next()
+        scanner.nextLine()
         try {
             val valorDouble = valorRecebido.toDouble()
             return valorDouble
         } catch (e:NumberFormatException) {
+            println("Erro! Digite apenas números")
+        }
+        /* //Essa forma permite a verificar se dá pra converter sem usar o try, catch
+        val valorDouble = valorRecebido.toDoubleOrNull()
+        if (valorDouble != null) {
+            return valorDouble
+        } else {
             println("Digite apenas números")
         }
+
+         */
     }
 }
 
@@ -97,7 +107,7 @@ class ContaBancariaScanner(nome: String, cpf: String, saldo: Double) {
     }
 
     fun sacar(valor: Double) {
-        if (valor <= saldo) {
+        if (valor <= saldo && valor > 0) {
             println("Seu saque no valor de R$: $valor, foi concluído com sucesso")
             saldo -= valor
             println("Seu saldo atual é de: R$: $saldo")
@@ -111,7 +121,7 @@ class ContaBancariaScanner(nome: String, cpf: String, saldo: Double) {
             println("Falha! Você não pode fazer uma transferência para si mesmo.")
 
         } else {
-            if (valor <= saldo) {
+            if (valor <= saldo && valor > 0) {
                 saldo -= valor
                 contaDestino.saldo += valor
                 println("Transferência de R$$valor concluída com sucesso para ${contaDestino.nome}.")

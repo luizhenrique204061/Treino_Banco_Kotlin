@@ -61,7 +61,8 @@ private fun exibirMenu() {
 
 private fun lerValorEntrada(scanner: Scanner): Double {
     while (true) {
-        var valorRecebido = scanner.nextLine()
+        val valorRecebido = scanner.next()
+        scanner.nextLine()
         try {
             val valorDouble = valorRecebido.toDouble()
             return valorDouble
@@ -86,7 +87,7 @@ class ContaBancaria(nome: String, cpf: String, saldo: Double) {
     }
 
     fun sacar(valor: Double) {
-        if (valor <= saldo) {
+        if (valor <= saldo && valor > 0) {
             println("Seu saque no valor de: $valor, foi concluído com sucesso")
             saldo -= valor
             println("Seu saldo atual é de: $saldo")
@@ -99,9 +100,10 @@ class ContaBancaria(nome: String, cpf: String, saldo: Double) {
         if (cpf == contaDestino.cpf) {
             println("Falha! Você não pode fazer uma transferência para sí mesmo")
         } else {
-            if (valor <= saldo) {
+            if (valor <= saldo && valor > 0) {
                 saldo -= valor
-                println("Transferência concluída com sucesso, para: ${contaDestino.nome}\n no valor de: $saldo")
+                contaDestino.saldo += valor
+                println("Transferência concluída com sucesso, para: ${contaDestino.nome}\n no valor de: ${contaDestino.saldo}")
                 println("Seu saldo atual é de: $saldo")
             }
         }
